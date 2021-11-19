@@ -25,21 +25,23 @@ user_input5 = st.number_input("dropoff_longitude")
 user_input6 = st.number_input("dropoff_latitude")
 
 st.markdown('Passenger count')
-user_input7 = st.number_input("Number of Passengers")
+user_input7 = st.number_input("Number of Passengers", min_value=1, max_value=8)
 
 
 mydict = {
-    'date': user_input1,
-    'time': user_input2,
-    'p_longitute': user_input3,
-    'p_latitute': user_input4,
-    'd_longitute': user_input5,
-    'd_latitute': user_input6,
-    'p_count': user_input7
+    'pickup_datetime': '2012-10-06 12:10:20',
+    'pickup_longitude': user_input3,
+    'pickup_latitude': user_input4,
+    'dropoff_longitude': user_input5,
+    'dropoff_latitude': user_input6,
+    'passenger_count': user_input7
 }
 
-url = 'https://taxifare.lewagon.ai/predict'
+#url = 'https://taxifare.lewagon.ai/predict'
+url = "https://taxifaremodel-olgxfxxy2a-ew.a.run.app/predict"
 
-if url == 'https://taxifare.lewagon.ai/predict':
-    x = requests.post(url, data=mydict)
-    print(x.text)
+if url == "https://taxifaremodel-olgxfxxy2a-ew.a.run.app/predict":
+    response = requests.get(url, params=mydict)
+    prediction = response.json()
+    st.markdown("""## Prediction""")
+    st.markdown(prediction['prediction'])
